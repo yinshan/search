@@ -1,56 +1,69 @@
-IKAnalyzer2012FF_hf1_factory:
-=====
-1. 在Solr4.0发布以后，官方取消了BaseTokenizerFactory接口，而直接使用Lucene Analyzer标准接口。因此IK分词器2012 FF版本也取消了org.wltea.analyzer.solr.IKTokenizerFactory类，进而直接使用IKAnalyzer。
+大标题
+===================================
+  大标题一般显示工程名,类似html的\<h1\><br />
+  你只要在标题下面跟上=====即可
 
-<fieldType name="text_cn" class="solr.TextField"> 
-  <analyzer class="org.wltea.analyzer.lucene.IKAnalyzer"/> 
-</fieldType> 
+  
+中标题
+-----------------------------------
+  中标题一般显示重点项,类似html的\<h2\><br />
+  你只要在标题下面输入------即可
+  
+### 小标题
+  小标题类似html的\<h3\><br />
+  小标题的格式如下 ### 小标题<br />
+  注意#和标题字符中间要有空格
 
+### 注意!!!下面所有语法的提示我都先用小标题提醒了!!! 
 
-2. 此处修改IKAnalyzer2012FF_hf1增加IKAnalyzerTokenizerFactory，同时修改一处package定义进而支持solr 4.10.1。
+### 单行文本框
+    这是一个单行的文本框,只要两个Tab再输入文字即可
+        
+### 多行文本框  
+    这是一个有多行的文本框
+    你可以写入代码等,每行文字只要输入两个Tab再输入文字即可
+    这里你可以输入一段代码
 
-<fieldType name="text_cn" class="solr.TextField" positionIncrementGap="100">
-  <analyzer>
-    <tokenizer class="org.wltea.analyzer.lucene.IKAnalyzerTokenizerFactory" useSmart="true"/>   
-    <filter class="solr.StopFilterFactory" ignoreCase="true" words="stopwords.txt" />	
-    <filter class="solr.LowerCaseFilterFactory"/> 
-  </analyzer>
-</fieldType>
+### 比如我们可以在多行文本框里输入一段代码,来一个Java版本的HelloWorld吧
+    public class HelloWorld {
 
-IKAnalyzerTokenizerFactory本身也支持ext.dic和stopword.dic，所以可以考虑如何与Solr filterFactory合并使用。(同义词filter)
+      /**
+      * @param args
+	    */
+	    public static void main(String[] args) {
+		    System.out.println("HelloWorld!");
 
-测试如下：
-=====
-http://localhost:8080/solr/#/collection1/analysis
-测试字符串：   我最喜欢看的是诛仙，最近出了梦幻诛仙网游。
+	    }
 
-使用text_cn进行分析：(LCF对中文不起作用，所以省略)
+    }
+### 链接
+1.[点击这里你可以链接到www.google.com](http://www.google.com)<br />
+2.[点击这里我你可以链接到我的博客](http://guoyunsky.iteye.com)<br />
 
-1. stopwords.txt包含“的”，ext.dic包含“诛仙”以及“梦幻诛仙”
+###只是显示图片
+![github](http://github.com/unicorn.png "github")
 
-IKT: (IKTokenizer)
-我，最喜欢，看，的，诛仙，最近，出了，梦幻诛仙，网游
-SF: (stopFilter)
-我，最喜欢，看，诛仙，最近，出了，梦幻诛仙，网游
+###想点击某个图片进入一个网页,比如我想点击github的icorn然后再进入www.github.com
+[![image]](http://www.github.com/)
+[image]: http://github.com/github.png "github"
 
-2. stopword.dic包含“的”，无论stopwords.txt是否包含"的"，ext.dic包含“诛仙”以及“梦幻诛仙”
+### 文字被些字符包围
+> 文字被些字符包围
+>
+> 只要再文字前面加上>空格即可
+>
+> 如果你要换行的话,新起一行,输入>空格即可,后面不接文字
+> 但> 只能放在行首才有效
 
-IKT:
-我，最喜欢，看，诛仙，最近，出了，梦幻诛仙，网游
-SF:
-我，最喜欢，看，诛仙，最近，出了，梦幻诛仙，网游
+### 文字被些字符包围,多重包围
+> 文字被些字符包围开始
+>
+> > 只要再文字前面加上>空格即可
+>
+>  > > 如果你要换行的话,新起一行,输入>空格即可,后面不接文字
+>
+> > > > 但> 只能放在行首才有效
 
-3. stopword.dic以及stopwords.txt均不包含“的”，ext.dic空
-
-IKT:SF:
-我，最喜欢，看，的，诛，仙，最近，出了，梦幻，诛，仙，网游
-
-Note:
-=====
-1. 编译本库依赖四个jar包：
-
-lucene-analyzers-common-4.10.1.jar
-lucene-core-4.10.1.jar
-lucene-grouping-4.10.1.jar
-lucene-queryparser-4.10.1.jar
-2. 也可以和solr一起编译，这样就不用显示add上述四个jar包了。
+### 特殊字符处理
+有一些特殊字符如<,#等,只要在特殊字符前面加上转义字符\即可<br />
+你想换行的话其实可以直接用html标签\<br /\>
